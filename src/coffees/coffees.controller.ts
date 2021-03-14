@@ -20,7 +20,9 @@ import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(
@@ -28,6 +30,8 @@ export class CoffeesController {
     @Inject(REQUEST) private readonly request: Request,
   ) {}
 
+  // @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Public()
   @Get()
   async findAll(
